@@ -1,6 +1,6 @@
 import { Header, Summary } from "@/components";
-import { TransactionsTable as Table } from "./components";
-import { TransactionsContainer } from "./styles";
+import { TransactionsTable as Table, SearchForm } from "./components";
+import { TransactionsContainer, } from "./styles";
 
 export function Transactions() {
   return (
@@ -8,6 +8,7 @@ export function Transactions() {
       <Header />
       <Summary />
       <TransactionsContainer>
+        <SearchForm />
         <Table />
       </TransactionsContainer>
     </div>
