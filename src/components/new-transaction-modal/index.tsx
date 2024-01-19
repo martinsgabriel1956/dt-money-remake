@@ -34,6 +34,7 @@ export function NewTransactionModal() {
             <TransactionTypeButton
               type="button"
               variant='income'
+              value="income"
             >
               <ArrowCircleUp size={24} />
               Entrada
@@ -41,6 +42,7 @@ export function NewTransactionModal() {
             <TransactionTypeButton
               type="button"
               variant='outcome'
+              value="outcome"
             >
               <ArrowCircleDown size={24} />
               Saída
