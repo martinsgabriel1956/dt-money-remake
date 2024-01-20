@@ -1,5 +1,6 @@
 import { useListTransactions } from '@/hooks/useListTransactions';
 import { PriceHighlight, TableContainer } from './styles';
+import { dateFormatter, priceFormatter } from '@/utils/formatter';
 
 export function TransactionsTable() {
   const { transactions } = useListTransactions()
@@ -16,11 +17,12 @@ export function TransactionsTable() {
               <PriceHighlight
                 variant={transaction.type}
               >
-                {transaction.price}
+                {transaction.type === 'outcome' && '- '}
+                {priceFormatter.format(transaction.price)}
               </PriceHighlight>
             </td>
             <td>{transaction.category}</td>
-            <td>{transaction.createdAt}</td>
+            <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
           </tr>
         ))}
       </tbody>
