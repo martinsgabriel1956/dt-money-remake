@@ -1,26 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useListTransactions } from '@/hooks/useListTransactions';
 import { PriceHighlight, TableContainer } from './styles';
 
-interface Transaction {
-  id: number
-  description: string
-  type: "income" | "outcome"
-  category: string
-  price: number
-  createdAt: string
-}
-
 export function TransactionsTable() {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  async function fetchTransactions() {
-    const response = await fetch('http://localhost:3333/transactions')
-    const data = await response.json()
-    setTransactions(data)
-  }
-
-  useEffect(() => {
-    fetchTransactions();
-  }, [])
+  const { transactions } = useListTransactions()
 
   return (
     <TableContainer>
