@@ -2,7 +2,7 @@
   "transactions": [
     {
       "id": 1,
-      "description": "Salário",
+      "description": "Desenvolvimento de site",
       "type": "income",
       "category": "Venda",
       "price": 14000,

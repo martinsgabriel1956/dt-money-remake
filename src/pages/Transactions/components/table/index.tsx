@@ -1,33 +1,46 @@
+import { useEffect, useState } from 'react';
 import { PriceHighlight, TableContainer } from './styles';
 
+interface Transaction {
+  id: number
+  description: string
+  type: "income" | "outcome"
+  category: string
+  price: number
+  createdAt: string
+}
+
 export function TransactionsTable() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  async function fetchTransactions() {
+    const response = await fetch('http://localhost:3333/transactions')
+    const data = await response.json()
+    setTransactions(data)
+  }
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [])
+
   return (
     <TableContainer>
       <tbody>
-        <tr>
-          <td>Desenvolvimento</td>
-          <td>
-            <PriceHighlight
-              variant='income'
-            >
-              R$ 12.000,00
-            </PriceHighlight>
-          </td>
-          <td>Venda</td>
-          <td>13/04/2023</td>
-        </tr>
-        <tr>
-          <td>Hamburguer</td>
-          <td>
-            <PriceHighlight
-              variant='outcome'
-            >
-              - R$ 59,00
-            </PriceHighlight>
-          </td>
-          <td>Alimentação</td>
-          <td>15/04/2024</td>
-        </tr>
+        {transactions.map(transaction => (
+          <tr
+            key={transaction.id}
+          >
+            <td>{transaction.description}</td>
+            <td>
+              <PriceHighlight
+                variant={transaction.type}
+              >
+                {transaction.price}
+              </PriceHighlight>
+            </td>
+            <td>{transaction.category}</td>
+            <td>{transaction.createdAt}</td>
+          </tr>
+        ))}
       </tbody>
     </TableContainer>
   )
