@@ -1,9 +1,9 @@
-import { useListTransactions } from '@/hooks/useListTransactions';
+import { useTransactions } from '@/hooks/useTransactions';
 import { PriceHighlight, TableContainer } from './styles';
 import { dateFormatter, priceFormatter } from '@/utils/formatter';
 
 export function TransactionsTable() {
-  const { transactions } = useListTransactions()
+  const { transactions } = useTransactions()
 
   return (
     <TableContainer>
