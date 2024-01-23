@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const TransactionsContainer = styled.main`
   width: 100%;
@@ -6,4 +6,4 @@ export const TransactionsContainer = styled.main`
   margin-top: 4rem;
   margin-inline: auto;
   padding-inline: 1.5rem;
-`;
+`

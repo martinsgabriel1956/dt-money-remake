@@ -1,36 +1,47 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import * as zod from 'zod';
-import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Content, Overlay, CloseButton, TransactionType, TransactionTypeButton } from './styles';
-import { useTransactions } from '@/hooks/useTransactions';
+import { useState } from 'react'
+import * as Dialog from '@radix-ui/react-dialog'
+import * as zod from 'zod'
+import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  Content,
+  Overlay,
+  CloseButton,
+  TransactionType,
+  TransactionTypeButton,
+  NewTransactionButton,
+} from './styles'
+import { useTransactions } from '@/hooks/useTransactions'
 
 const newTransactionFormSchema = zod.object({
   description: zod.string(),
   price: zod.number(),
   category: zod.string(),
-  type: zod.enum(["income", "outcome"]),
+  type: zod.enum(['income', 'outcome']),
 })
 
 type NewTransactionFormInputs = zod.infer<typeof newTransactionFormSchema>
 
 export function NewTransactionModal() {
-  const { createNewTransaction } = useTransactions();
+  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false)
+  const { createNewTransaction } = useTransactions()
   const {
     control,
     register,
     reset,
     handleSubmit,
-    formState: {
-      isSubmitting,
-    }
+    formState: { isSubmitting },
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(newTransactionFormSchema),
     defaultValues: {
-      type: 'income'
-    }
-  });
+      type: 'income',
+    },
+  })
+
+  function handleTransactionModalOpenChange(value: boolean) {
+    setIsTransactionModalOpen(value)
+  }
 
   async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
     const { description, price, category, type } = data
@@ -43,77 +54,80 @@ export function NewTransactionModal() {
     })
 
     reset()
+    handleTransactionModalOpenChange(false)
   }
 
   return (
-    <Dialog.Portal>
-      <Overlay />
-      <Content>
-        <Dialog.Title>Nova transação</Dialog.Title>
+    <Dialog.Root
+      open={isTransactionModalOpen}
+      onOpenChange={handleTransactionModalOpenChange}
+    >
+      <Dialog.Trigger>
+        <NewTransactionButton>Nova transação</NewTransactionButton>
+      </Dialog.Trigger>
 
-        <CloseButton>
-          <X size={24} />
-        </CloseButton>
+      <Dialog.Portal>
+        <Overlay />
+        <Content>
+          <Dialog.Title>Nova transação</Dialog.Title>
 
-        <form
-          onSubmit={handleSubmit(handleCreateNewTransaction)}
-        >
-          <input
-            type="text"
-            placeholder='Descrição'
-            required
-            {...register('description')}
-          />
-          <input
-            type="number"
-            placeholder='Preço'
-            required
-            {...register('price', { valueAsNumber: true })}
-          />
-          <input
-            type="text"
-            placeholder='Categoria'
-            required
-            {...register("category")}
-          />
-          <Controller
-            control={control}
-            name='type'
-            render={({ field }) => (
-              <TransactionType
-                onValueChange={field.onChange}
-                value={field.value}
-              >
-                <TransactionTypeButton
-                  type="button"
-                  variant='income'
-                  value="income"
+          <CloseButton>
+            <X size={24} />
+          </CloseButton>
+
+          <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
+            <input
+              type="text"
+              placeholder="Descrição"
+              required
+              {...register('description')}
+            />
+            <input
+              type="number"
+              placeholder="Preço"
+              required
+              {...register('price', { valueAsNumber: true })}
+            />
+            <input
+              type="text"
+              placeholder="Categoria"
+              required
+              {...register('category')}
+            />
+            <Controller
+              control={control}
+              name="type"
+              render={({ field }) => (
+                <TransactionType
+                  onValueChange={field.onChange}
+                  value={field.value}
                 >
-                  <ArrowCircleUp size={24} />
-                  Entrada
-                </TransactionTypeButton>
-                <TransactionTypeButton
-                  type="button"
-                  variant='outcome'
-                  value="outcome"
-                >
-                  <ArrowCircleDown size={24} />
-                  Saída
-                </TransactionTypeButton>
-              </TransactionType>
-            )}
-          />
+                  <TransactionTypeButton
+                    type="button"
+                    variant="income"
+                    value="income"
+                  >
+                    <ArrowCircleUp size={24} />
+                    Entrada
+                  </TransactionTypeButton>
+                  <TransactionTypeButton
+                    type="button"
+                    variant="outcome"
+                    value="outcome"
+                  >
+                    <ArrowCircleDown size={24} />
+                    Saída
+                  </TransactionTypeButton>
+                </TransactionType>
+              )}
+            />
 
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-          >
-            Cadastrar
-          </button>
-        </form>
-      </Content>
-    </Dialog.Portal>
+            <button type="submit" disabled={isSubmitting}>
+              Cadastrar
+            </button>
+          </form>
+        </Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }
-

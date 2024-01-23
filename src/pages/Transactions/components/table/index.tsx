@@ -1,6 +1,6 @@
-import { useTransactions } from '@/hooks/useTransactions';
-import { PriceHighlight, TableContainer } from './styles';
-import { dateFormatter, priceFormatter } from '@/utils/formatter';
+import { useTransactions } from '@/hooks/useTransactions'
+import { PriceHighlight, TableContainer } from './styles'
+import { dateFormatter, priceFormatter } from '@/utils/formatter'
 
 export function TransactionsTable() {
   const { transactions } = useTransactions()
@@ -8,15 +8,11 @@ export function TransactionsTable() {
   return (
     <TableContainer>
       <tbody>
-        {transactions.map(transaction => (
-          <tr
-            key={transaction.id}
-          >
+        {transactions.map((transaction) => (
+          <tr key={transaction.id}>
             <td>{transaction.description}</td>
             <td>
-              <PriceHighlight
-                variant={transaction.type}
-              >
+              <PriceHighlight variant={transaction.type}>
                 {transaction.type === 'outcome' && '- '}
                 {priceFormatter.format(transaction.price)}
               </PriceHighlight>

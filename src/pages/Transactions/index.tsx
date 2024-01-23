@@ -1,6 +1,6 @@
-import { Header, Summary } from "@/components";
-import { TransactionsTable as Table, SearchForm } from "./components";
-import { TransactionsContainer, } from "./styles";
+import { Header, Summary } from '@/components'
+import { TransactionsTable as Table, SearchForm } from './components'
+import { TransactionsContainer } from './styles'
 
 export function Transactions() {
   return (

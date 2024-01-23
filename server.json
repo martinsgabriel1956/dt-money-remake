@@ -55,6 +55,14 @@
       "type": "outcome",
       "createdAt": "2024-01-23T01:42:35.793Z",
       "id": 7
+    },
+    {
+      "description": "Partida de futebol",
+      "price": 35,
+      "category": "Jogo",
+      "type": "outcome",
+      "createdAt": "2024-01-23T01:55:17.756Z",
+      "id": 8
     }
   ]
 }
