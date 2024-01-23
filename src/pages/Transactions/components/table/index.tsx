@@ -1,9 +1,13 @@
-import { useTransactions } from '@/hooks/useTransactions'
+import { useContextSelector } from 'use-context-selector'
 import { PriceHighlight, TableContainer } from './styles'
 import { dateFormatter, priceFormatter } from '@/utils/formatter'
+import { TransactionsContext } from '@/contexts/TransactionsContext'
 
 export function TransactionsTable() {
-  const { transactions } = useTransactions()
+  const transactions = useContextSelector(
+    TransactionsContext,
+    (context) => context.transactions,
+  )
 
   return (
     <TableContainer>
