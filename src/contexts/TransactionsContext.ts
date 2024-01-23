@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext } from 'use-context-selector'
 
 export type Transaction = {
   id: number
@@ -16,7 +16,7 @@ export interface CreateTransactionInput {
   type: 'income' | 'outcome'
 }
 
-interface TransactionContextType {
+export interface TransactionContextType {
   transactions: Transaction[]
   fetchTransactions: (query?: string) => Promise<void>
   createNewTransaction: (data: CreateTransactionInput) => Promise<void>

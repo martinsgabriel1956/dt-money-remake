@@ -1,6 +1,10 @@
+import { useContextSelector } from 'use-context-selector'
 import { TransactionsContext } from '@/contexts/TransactionsContext'
-import { useContext } from 'react'
 
 export function useTransactions() {
-  return useContext(TransactionsContext)
+  return useContextSelector(TransactionsContext, (context) => ({
+    createNewTransaction: context.createNewTransaction,
+    transactions: context.transactions,
+    fetchTransactions: context.fetchTransactions,
+  }))
 }
