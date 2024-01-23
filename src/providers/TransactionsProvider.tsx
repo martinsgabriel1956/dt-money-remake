@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react"
-import { Transaction, TransactionsContext } from "@/contexts/TransactionsContext"
+import { CreateTransactionInput, Transaction, TransactionsContext } from "@/contexts/TransactionsContext"
 import { api } from "@/libs/axios";
 
 interface TransactionsProviderProps {
@@ -11,11 +11,27 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   async function fetchTransactions(query?: string) {
     const response = await api.get("/transactions", {
       params: {
+        _sort: "createdAt",
+        _order: "desc",
         q: query
       }
     })
     const data = await response.data
     setTransactions(data)
+  }
+
+  async function createNewTransaction(data: CreateTransactionInput) {
+    const { description, price, category, type } = data
+
+    const response = await api.post("/transactions", {
+      description,
+      price,
+      category,
+      type,
+      createdAt: new Date()
+    })
+
+    setTransactions(prevState => [response.data, ...prevState])
   }
 
   useEffect(() => {
@@ -24,7 +40,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   return (
     <TransactionsContext.Provider
-      value={{ transactions, fetchTransactions }}
+      value={{ transactions, fetchTransactions, createNewTransaction }}
     >
       {children}
     </TransactionsContext.Provider>

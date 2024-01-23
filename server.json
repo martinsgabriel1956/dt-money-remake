@@ -15,6 +15,46 @@
       "category": "Alimentação",
       "price": 40,
       "createdAt": "2024-01-20T15:04:15.750Z"
+    },
+    {
+      "description": "App Mobile",
+      "price": 14000,
+      "category": "Venda",
+      "type": "income",
+      "createdAt": "2024-01-23T01:27:26.408Z",
+      "id": 3
+    },
+    {
+      "description": "Sushi",
+      "price": 76,
+      "category": "Comida",
+      "type": "outcome",
+      "createdAt": "2024-01-23T01:38:19.740Z",
+      "id": 4
+    },
+    {
+      "description": "Jogo",
+      "price": 25,
+      "category": "Jogo",
+      "type": "outcome",
+      "createdAt": "2024-01-23T01:39:48.484Z",
+      "id": 5
+    },
+    {
+      "description": "Bonus",
+      "price": 1200,
+      "category": "Salario",
+      "type": "income",
+      "createdAt": "2024-01-23T01:40:14.791Z",
+      "id": 6
+    },
+    {
+      "description": "Camisa",
+      "price": 15,
+      "category": "Roupas",
+      "type": "outcome",
+      "createdAt": "2024-01-23T01:42:35.793Z",
+      "id": 7
     }
   ]
 }
